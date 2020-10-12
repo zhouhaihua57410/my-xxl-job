@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.netease.vcloud.meeting.server.cronjob.mapper.MapperInfoNotifyMapper">
+
+
+    <resultMap id="resultMap" type="com.netease.vcloud.meeting.server.cronjob.model.MapperInfoNotify">
+        <result property="id" column="id"/>
+        <result property="appId" column="app_id"/>
+        <result property="meetingId" column="meeting_id"/>
+        <result property="callbackUrl" column="callback_url"/>
+        <result property="body" column="body"/>
+        <result property="status" column="status"/>
+        <result property="dbCreateTime" column="db_create_time"/>
+        <result property="dbUpdateTime" column="db_update_time"/>
+    </resultMap>
+
+    <select id="listByStatus" resultMap="resultMap">
+        select *
+        from meeting_info_notify
+        where status = 0
+    </select>
+</mapper>
