@@ -13,6 +13,7 @@ import com.xxl.job.core.handler.annotation.XxlJob;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.List;
  * @Description:
  */
 @Component
-public class HttpJobHandler extends IJobHandler {
+public class HttpJobHandler extends MeetingJobHandler {
 
 
     private static Logger logger = LoggerFactory.getLogger("xxl-job logger");
@@ -40,8 +41,12 @@ public class HttpJobHandler extends IJobHandler {
 
     @XxlJob(value = "httpJobHandler")
     @Override
-    public ReturnT<String> execute(String param) throws Exception {
+    public ReturnT<String> execute(String param) {
+        return super.execute(param);
+    }
 
+    @Override
+    public void doJob(Object splitId, Long timestamp) throws DataAccessException {
         List<MapperInfoNotify> meetingList = mapperInfoNotifyMapper.listByStatus();
         for (MapperInfoNotify meeting : meetingList) {
             App app = appMapper.queryByAppId(meeting.getAppId());
@@ -49,7 +54,12 @@ public class HttpJobHandler extends IJobHandler {
             logger.info("HttpJobHandler receive msg:{}", msg);
             SendStorage.sendToApp(app.getCallbackUrl(), app.getAppKey(), app.getAppSecret(), meeting.getBody());
         }
-
-        return SUCCESS;
     }
+
+    @Override
+    protected String getSplitter() {
+        return null;
+    }
+
+
 }

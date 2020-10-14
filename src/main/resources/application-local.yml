@@ -15,3 +15,28 @@ xxl:
       logpath: /data/applogs/xxl-job/jobhandler
       logretentiondays: -1
     accessToken:
+
+## mybatis
+mybatis:
+  mapper-locations: classpath*:mapper/**/*.xml
+
+# Redis配置信息
+redis:
+  host: 127.0.0.1
+  port: 6379
+  password: 123456
+  timeout: 5000
+  maxTotal: 10
+  maxIdle: 5
+  minIdle: 1
+  maxWaitMillis: 5000
+  minEvictableIdleTimeMillis: 300000
+  numTestsPerEvictionRun: 3
+  timeBetweenEvictionRunsMillis: 60000
+  testOnBorrow: true
+  blockWhenExhausted: false
+  # key的最长有效时间
+  maxKeyExpireSecond: 120
+  # 配置相关缓存key有效时间
+  configKeyExpireSecond: 60
+  lockExpireSecond: 500

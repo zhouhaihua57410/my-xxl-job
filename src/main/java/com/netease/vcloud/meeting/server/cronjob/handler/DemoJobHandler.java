@@ -5,6 +5,7 @@ import com.xxl.job.core.handler.IJobHandler;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
@@ -17,20 +18,24 @@ import java.util.concurrent.TimeUnit;
 
 
 @Component
-public class DemoJobHandler extends IJobHandler {
+public class DemoJobHandler extends MeetingJobHandler {
 
-    private static Logger logger = LoggerFactory.getLogger("xxl-job logger");
+    private static Logger logger = LoggerFactory.getLogger(DemoJobHandler.class);
+
+    @Override
+    public void doJob(Object split, Long timestamp) throws DataAccessException {
+        logger.info("demo job start, execute unit split :" + split.toString());
+    }
+
+    @Override
+    protected String getSplitter() {
+        return "defaultSplitter";
+    }
 
     @XxlJob(value = "demoJobHandler")
     @Override
-    public ReturnT<String> execute(String param) throws Exception {
-        logger.info("***** demo job start *****");
-        System.out.println("***** demo job start *****");
+    public ReturnT<String> execute(String param) {
 
-//        for (int i = 0; i < 5; i++) {
-//            logger.info("beat at:" + i);
-//            TimeUnit.SECONDS.sleep(2);
-//        }
-        return SUCCESS;
+        return super.execute(param);
     }
 }

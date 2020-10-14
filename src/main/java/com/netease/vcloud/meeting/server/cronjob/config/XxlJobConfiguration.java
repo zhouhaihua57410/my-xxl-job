@@ -1,5 +1,6 @@
-package com.netease.vcloud.meeting.server.cronjob;
+package com.netease.vcloud.meeting.server.cronjob.config;
 
+import com.netease.vcloud.meeting.server.cronjob.common.TaskManager;
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -49,5 +50,10 @@ public class XxlJobConfiguration {
         xxlJobSpringExecutor.setLogPath(logPath);
         xxlJobSpringExecutor.setLogRetentionDays(logRetentionDays);
         return xxlJobSpringExecutor;
+    }
+
+    @Bean(name = "schedule")
+    public TaskManager getSchedule() {
+        return new TaskManager("schedule", Runtime.getRuntime().availableProcessors() * 2);
     }
 }
