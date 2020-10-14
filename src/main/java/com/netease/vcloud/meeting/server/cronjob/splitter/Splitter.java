@@ -12,6 +12,8 @@ public abstract class Splitter<T> {
 
     public static final String MEETING_INFO_REDIS_KEY = "meeting_info_notify_key";
 
+    public static final String DEMO_REDIS_KEY = "demo_key";
+
     public abstract List<T> query(long timestamp);
 
     public List<T> split(int index, int total, long timestamp) {

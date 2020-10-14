@@ -1,6 +1,6 @@
 package com.netease.vcloud.meeting.server.cronjob.mapper;
 
-import com.netease.vcloud.meeting.server.cronjob.model.MapperInfoNotify;
+import com.netease.vcloud.meeting.server.cronjob.model.MeetingInfoNotify;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -16,5 +16,5 @@ import java.util.List;
 @Component
 public interface MapperInfoNotifyMapper {
 
-    List<MapperInfoNotify> listByStatus();
+    List<MeetingInfoNotify> listByStatus();
 }

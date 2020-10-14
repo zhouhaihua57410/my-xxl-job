@@ -4,11 +4,10 @@ import com.google.gson.Gson;
 import com.netease.vcloud.meeting.server.cronjob.mapper.AppMapper;
 import com.netease.vcloud.meeting.server.cronjob.mapper.MapperInfoNotifyMapper;
 import com.netease.vcloud.meeting.server.cronjob.model.App;
-import com.netease.vcloud.meeting.server.cronjob.model.MapperInfoNotify;
+import com.netease.vcloud.meeting.server.cronjob.model.MeetingInfoNotify;
 import com.netease.vcloud.meeting.server.cronjob.model.Msg;
 import com.netease.vcloud.meeting.server.cronjob.sender.SendStorage;
 import com.xxl.job.core.biz.model.ReturnT;
-import com.xxl.job.core.handler.IJobHandler;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,9 +45,9 @@ public class HttpJobHandler extends MeetingJobHandler {
     }
 
     @Override
-    public void doJob(Object splitId, Long timestamp) throws DataAccessException {
-        List<MapperInfoNotify> meetingList = mapperInfoNotifyMapper.listByStatus();
-        for (MapperInfoNotify meeting : meetingList) {
+    public void doJob(String splitId, Long timestamp) throws DataAccessException {
+        List<MeetingInfoNotify> meetingList = mapperInfoNotifyMapper.listByStatus();
+        for (MeetingInfoNotify meeting : meetingList) {
             App app = appMapper.queryByAppId(meeting.getAppId());
             Msg msg =  new Gson().fromJson(meeting.getBody(), Msg.class);
             logger.info("HttpJobHandler receive msg:{}", msg);

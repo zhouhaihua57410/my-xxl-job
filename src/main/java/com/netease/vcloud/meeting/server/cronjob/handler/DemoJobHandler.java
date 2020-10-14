@@ -23,8 +23,8 @@ public class DemoJobHandler extends MeetingJobHandler {
     private static Logger logger = LoggerFactory.getLogger(DemoJobHandler.class);
 
     @Override
-    public void doJob(Object split, Long timestamp) throws DataAccessException {
-        logger.info("demo job start, execute unit split :" + split.toString());
+    public void doJob(String split, Long timestamp) throws DataAccessException {
+        logger.info("demo job start, execute unit split :" + split);
     }
 
     @Override

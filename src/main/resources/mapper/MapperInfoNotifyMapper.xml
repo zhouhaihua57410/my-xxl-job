@@ -6,7 +6,7 @@
 <mapper namespace="com.netease.vcloud.meeting.server.cronjob.mapper.MapperInfoNotifyMapper">
 
 
-    <resultMap id="resultMap" type="com.netease.vcloud.meeting.server.cronjob.model.MapperInfoNotify">
+    <resultMap id="resultMap" type="com.netease.vcloud.meeting.server.cronjob.model.MeetingInfoNotify">
         <result property="id" column="id"/>
         <result property="appId" column="app_id"/>
         <result property="meetingId" column="meeting_id"/>

@@ -26,7 +26,7 @@ public class MeetingInfoNotifyRedis {
     @Autowired
     private JedisUtil redisUtil;
 
-    @Value("${redis.maxKeyExpireSecond:10}")
+    @Value("${redis.maxKeyExpireSecond:120}")
     private int maxKeyExpireSecond;
 
     public String getMeetingInfoList(String key) {

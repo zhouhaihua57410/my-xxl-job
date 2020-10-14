@@ -8,7 +8,7 @@ import java.util.Date;
  * @Description:
  */
 
-public class MapperInfoNotify {
+public class MeetingInfoNotify {
 
     private Long id;
 

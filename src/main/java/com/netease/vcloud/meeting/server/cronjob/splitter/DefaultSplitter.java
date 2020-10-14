@@ -26,36 +26,25 @@ public class DefaultSplitter extends Splitter {
 
     private static Logger logger = LoggerFactory.getLogger(DefaultSplitter.class);
 
-
-
     @Resource
     private MeetingInfoNotifyRedis meetingInfoNotifyRedis;
 
     @Override
     public List query(long timestamp) {
-
         String result;
-        if (meetingInfoNotifyRedis.exist(MEETING_INFO_REDIS_KEY)){
-            result = meetingInfoNotifyRedis.getMeetingInfoList(MEETING_INFO_REDIS_KEY);
+        if (meetingInfoNotifyRedis.exist(DEMO_REDIS_KEY)){
+            result = meetingInfoNotifyRedis.getMeetingInfoList(DEMO_REDIS_KEY);
+            logger.info("get list by redis");
             return new Gson().fromJson(result, new TypeToken<List<Long>>() {}.getType());
         }else {
             List list = getList();
-            meetingInfoNotifyRedis.set(MEETING_INFO_REDIS_KEY, new Gson().toJson(list));
+            meetingInfoNotifyRedis.set(DEMO_REDIS_KEY, new Gson().toJson(list));
+            logger.info("get list by db");
             return list;
         }
     }
 
-    public static void main(String[] args) {
-        List list = getList();
-        String s = new Gson().toJson(list);
-        System.out.println(s);
-        List<Long> list2 = new Gson().fromJson(s, new TypeToken<List<Long>>() {}.getType());
-        for (Long aLong : list2) {
-            System.out.println(aLong);
-        }
-    }
-
-    public static List getList(){
+    private static List getList(){
         List<Long> list = new ArrayList<>();
         list.add(1L);
         list.add(2L);

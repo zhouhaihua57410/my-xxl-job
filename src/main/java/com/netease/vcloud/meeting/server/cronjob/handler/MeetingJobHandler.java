@@ -33,18 +33,16 @@ public abstract class MeetingJobHandler extends IJobHandler {
     @Resource(name = "schedule")
     private TaskManager schedule;
 
-    public abstract void doJob(Object split, Long timestamp) throws DataAccessException;
+    public abstract void doJob(String split, Long timestamp) throws DataAccessException;
 
     protected abstract String getSplitter();
 
 
     @Override
-    public ReturnT<String> execute(String s) {
-        logger.info("execute job, tick param:" + s);
-
+    public ReturnT<String> execute(String params) {
+        logger.info("execute job, tick param:" + params);
         String splitterName = getSplitter();
         final Long timestamp = System.currentTimeMillis();
-
         if (StringUtils.isBlank(splitterName)) {
             Splitter splitter = (Splitter) applicationContext.getBean("defaultSplitter");
             ShardingUtil.ShardingVO shardingVO = ShardingUtil.getShardingVo();
@@ -62,7 +60,7 @@ public abstract class MeetingJobHandler extends IJobHandler {
                 for (final Object splitId : list) {
                     schedule.getExecutor().execute(() -> {
                         try {
-                            doJob(splitId, timestamp);
+                            doJob(splitId.toString(), timestamp);
                             logger.info(String.format("finished, timestamp=%d, split=%s", timestamp, splitId));
                         }catch (Exception e){
                             logger.error("#doJob() occur an error", e);
